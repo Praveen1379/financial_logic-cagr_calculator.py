@@ -1,45 +1,43 @@
 # Financial Analysis Tools - CAGR Calculator
-# Author: Praveen
-# Description: Calculates Compound Annual Growth Rate for investments
 
 def calculate_cagr(start_value, end_value, years):
-    """
-    Calculates the Compound Annual Growth Rate (CAGR).
-    
-    Formula: (End Value / Start Value) ^ (1 / n) - 1
-    """
+    # Logic to calculate growth rate
     if start_value <= 0 or years <= 0:
-        return "Error: Investment and years must be positive numbers."
+        return None
     
+    # Formula: (FV / PV) ^ (1/n) - 1
     cagr = (end_value / start_value) ** (1 / years) - 1
-    return cagr * 100  # Convert to percentage
+    return cagr * 100
 
-# --- Main Execution ---
+# --- MAIN EXECUTION ---
 if __name__ == "__main__":
     print("--- CAGR Financial Calculator ---")
     
     try:
-        # Taking user input
-        pv = float(input("Enter Initial Investment Value (PV): "))
-        fv = float(input("Enter Final Investment Value (FV): "))
-        n = float(input("Enter Number of Years (n): "))
-        
-        # Calculation
+        # STEP 1: Inputs
+        pv = float(input("Enter Initial Investment (PV): "))
+        fv = float(input("Enter Final Investment (FV): "))
+        n = float(input("Enter Years (n): "))
+
+        # STEP 2: Calculate
         result = calculate_cagr(pv, fv, n)
-        
-        # Display Result
-        if isinstance(result, str):
-            print(result)
+
+        # STEP 3: Output
+        if result is None:
+            print("Error: Inputs must be positive numbers.")
         else:
-            print(f"The Compound Annual Growth Rate is: {result:.2f}%")
+            # Using .format() to prevent version errors
+            print("The CAGR is: {:.2f}%".format(result))
             
-            # Analyst Insight
+            # Analysis Logic
             if result > 12:
-                print("Analysis: This is a high-growth investment (beats average market returns).")
+                print("Analysis: High Growth (Beats Market)")
             elif result > 6:
-                print("Analysis: This is a moderate growth investment.")
+                print("Analysis: Moderate Growth")
             else:
-                print("Analysis: This returns below inflation rates.")
+                print("Analysis: Low Growth (Inflation Risk)")
                 
     except ValueError:
-        print("Invalid input! Please enter numeric values.")
+        print("Error: Please enter valid numbers only.")
+    except Exception as e:
+        print("An error occurred:", e)
